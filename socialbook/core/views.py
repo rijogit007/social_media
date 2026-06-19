@@ -68,13 +68,19 @@ def signin(request):
     
     if request.method=="POST":
         
-        username=request.POST.get("username")
-        password=request.POST.get("password")
+        username=request.POST["user_name"]
+        password=request.POST["password1"]
         
         user=auth.authenticate(username=username,password=password)
         
         if user is not None:
             auth.login(request,user)
-            return
+            return redirect('home')
         
-        return render(request,'signin.html')
+        else:
+            messages.info(request, 'check credential')
+            return redirect('signin')
+            
+            
+        
+    return render(request,'signin.html')
