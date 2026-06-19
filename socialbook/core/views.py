@@ -1,7 +1,7 @@
 from django.shortcuts import render,redirect
 
 from django.contrib.auth.models import User,auth
-
+from core.models import Profile
 from django.contrib import messages
 
 # Create your views here.
@@ -45,10 +45,36 @@ def signup(request):
                 )
 
                 user.save()
-                return redirect('login')
+                
+                
+                
+            user_model=User.objects.get(username=user_name)
+            
+            new_profile=Profile.objects.create(user=user_model,id_user=user_model.id)
+            
+            new_profile.save()
+        
+            return redirect('signin')
 
         else:
             messages.info(request, 'Passwords do not match')
             return redirect('signup')
 
     return render(request, 'signup.html')
+
+
+
+def signin(request):
+    
+    if request.method=="POST":
+        
+        username=request.POST.get("username")
+        password=request.POST.get("password")
+        
+        user=auth.authenticate(username=username,password=password)
+        
+        if user is not None:
+            auth.login(request,user)
+            return
+        
+        return render(request,'signin.html')
