@@ -1,5 +1,5 @@
 from django.shortcuts import render,redirect
-
+from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User,auth
 from core.models import Profile
 from django.contrib import messages
@@ -46,7 +46,8 @@ def signup(request):
 
                 user.save()
                 
-                
+            user_login=auth.authenticate(username=user_name,password=password1,email=email)
+            auth.login(request,user_login)    
                 
             user_model=User.objects.get(username=user_name)
             
@@ -92,5 +93,30 @@ def logout(request):
     auth.logout(request)
     return render(request,'index.html')
 
+
+@login_required(login_url='signin')
+def settings(request):
+    setting = Profile.objects.get(user=request.user)
+
+    if request.method == 'POST':
+        profileimg = request.FILES.get('profileimg')
+        first_name = request.POST.get('first_name')
+        last_name = request.POST.get('last_name')
+        bio = request.POST.get('bio')
+        location = request.POST.get('location')
+
+        request.user.first_name = first_name
+        request.user.last_name = last_name
+        request.user.save()
+
+        setting.bio = bio
+        setting.location = location
+
+        if profileimg:
+            setting.profileimg = profileimg
+
+        setting.save()
+
+    return render(request, 'settings.html', {'setting': setting})
 
 
