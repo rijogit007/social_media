@@ -67,14 +67,23 @@
     <form method="POST" enctype="multipart/form-data">
         {% csrf_token %}
 
-        <label>Bio</label>
-        <textarea name="bio" rows="4" value="{{ setting.bio }}" placeholder="Enter your bio"></textarea>
-
-        <label>Profile Image</label>
-        <input type="file" value="{{ setting.profileimg.url }}" name="profileimg">
+        {% comment %} <label>Location</label>
+        <input type="text" name="first_name" value="{{ setting.first_name }}" placeholder="Enter your location">
 
         <label>Location</label>
-        <input type="text" name="location"default:"no locaton" value="{{ setting.location }}"  placeholder="Enter your location">
+        <input type="text" name="last_name" value="{{ setting.last_name }}" placeholder="Enter your location"> {% endcomment %}
+        
+        <label>Bio</label>
+        <textarea  rows="4" name="bio" placeholder="Enter your bio">{{ setting.bio }}</textarea>
+
+        <label>Current Profile Image</label>
+<img src="{{ setting.profileimg.url }}" alt="Profile" width="150">
+
+<label>Choose New Profile Image</label>
+<input type="file" name="profileimg">
+
+        <label>Location</label>
+        <input type="text" name="location" value="{{ setting.location }}" placeholder="Enter your location">
 
         <button type="submit">Save Profile</button>
     </form>

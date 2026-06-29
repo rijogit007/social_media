@@ -97,25 +97,43 @@ def logout(request):
 @login_required(login_url='signin')
 def settings(request):
     setting = Profile.objects.get(user=request.user)
+    # user=User.objects.get(first_name=first_name,last_name=last_name)
+    
 
     if request.method == 'POST':
-        profileimg = request.FILES.get('profileimg')
-        first_name = request.POST.get('first_name')
-        last_name = request.POST.get('last_name')
-        bio = request.POST.get('bio')
-        location = request.POST.get('location')
 
-        request.user.first_name = first_name
-        request.user.last_name = last_name
-        request.user.save()
-
-        setting.bio = bio
-        setting.location = location
-
-        if profileimg:
-            setting.profileimg = profileimg
-
-        setting.save()
+        
+        if request.FILES.get('profileimg') == None:
+            first_name=request.get('first_name')
+            last_name=request.get('last_name')
+            
+            image=setting.profileimg
+            bio=request.get('bio')
+            location=request.get('location')
+            
+            
+            # user.first_name=last_name 
+            # user.last_name=first_name
+            setting.profileimg= image
+            setting.bio=bio
+            setting.location=location
+            
+            setting.save()
+            # user.save()
+        if request.FILES.get('profileimg') != None:
+            
+            # first_name=request.get('first_name')
+            # last_name=request.get('last_name')
+            
+            image=request.FILES.get('profileimg')
+            bio=request.get('bio')
+            location=request.get('location')
+            
+            
+            setting.save()
+            # user.save()
+        
+            return redirect('home')
 
     return render(request, 'settings.html', {'setting': setting})
 
