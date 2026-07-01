@@ -4,18 +4,35 @@ from django.contrib.auth.models import User,auth
 from core.models import Profile
 from django.contrib import messages
 
+from django.http import HttpResponse
+
 # Create your views here.
 
 
 def index(request):
+       
     
     return render(request, 'index.html')
 
 
+@login_required(login_url='signin')
 def home(request):
+    
+    
+    user_object=User.objects.get(username=request.user.username)
+    
+    profile_object=Profile.objects.get(user=user_object) 
     return render (request,'home.html')
 
 
+@login_required(login_url='signin')
+def upload(request):
+    return HttpResponse("upload page")
+
+
+
+
+@login_required(login_url='signin')
 def signup(request):
 
     if request.method == "POST":
@@ -64,7 +81,7 @@ def signup(request):
     return render(request, 'signup.html')
 
 
-
+@login_required(login_url='signin')
 def signin(request):
     
     if request.method=="POST":
@@ -87,7 +104,7 @@ def signin(request):
     return render(request,'signin.html')
 
 
-
+@login_required(login_url='signin')
 def logout(request):
     
     auth.logout(request)
