@@ -1,7 +1,7 @@
 from django.shortcuts import render,redirect
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User,auth
-from core.models import Profile
+from core.models import Profile,Post
 from django.contrib import messages
 
 from django.http import HttpResponse
@@ -27,7 +27,17 @@ def home(request):
 
 @login_required(login_url='signin')
 def upload(request):
-    return HttpResponse("upload page")
+    
+    if request.methd=="POST":
+        user=request.user.username
+        image=request.FILES.get('image_upload')
+        caption=request.POST.get('caption')
+        
+        new_post=Post.objects.create(image=image,caption=caption)
+        
+        new_post.save()
+        
+        return HttpResponse("upload page")
 
 
 
@@ -81,7 +91,7 @@ def signup(request):
     return render(request, 'signup.html')
 
 
-@login_required(login_url='signin')
+
 def signin(request):
     
     if request.method=="POST":
