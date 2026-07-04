@@ -28,21 +28,43 @@ def home(request):
 @login_required(login_url='signin')
 def upload(request):
     
-    if request.methd=="POST":
+    if request.method=="POST":
         user=request.user.username
         image=request.FILES.get('image_upload')
         caption=request.POST.get('caption')
         
-        new_post=Post.objects.create(image=image,caption=caption)
+        new_post=Post.objects.create(user=user,image=image,caption=caption)
         
         new_post.save()
-        
-        return HttpResponse("upload page")
+        messages.info(request, 'img uploaded')
+        return redirect('home')
 
 
+    return render(request,'home.html')
 
 
 @login_required(login_url='signin')
+def profile(request):
+    
+    profile_object=Profile.objects.get(user=request.user)
+    user_posts=Post.objects.filter(user=request.user)
+    
+    
+
+    context={
+        
+        
+    "profile_object": profile_object,
+    "user_posts": user_posts,
+        
+    }
+    
+    print(user_posts)
+    
+    return render(request,'profile.html',context)
+    
+
+# @login_required(login_url='signin')
 def signup(request):
 
     if request.method == "POST":
@@ -95,7 +117,7 @@ def signup(request):
 def signin(request):
     
     if request.method=="POST":
-        
+        # h1
         username=request.POST["user_name"]
         password=request.POST["password1"]
         
@@ -166,6 +188,13 @@ def settings(request):
             # user.save()
         
             return redirect('home')
+        
+        
+        else:
+            
+            return redirect('home')
+        
+        # messages.info(request,"profile updated")
 
     return render(request, 'settings.html', {'setting': setting})
 
