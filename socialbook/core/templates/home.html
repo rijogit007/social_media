@@ -241,24 +241,30 @@
             <div>Story 2</div>
             <div>Story 3</div>
         </div>
+       {% for post in user_all_posts %}
 
-        <div class="post">
-            <div class="post-header">
-                <img src="https://i.pravatar.cc/150?img=11">
-                <div>
-                    <strong>alex_dev</strong><br>
-                    <small>2 hours ago</small>
-                </div>
-            </div>
+<div class="post">
 
-            <img class="post-image" src="https://picsum.photos/800/500">
+    <div class="post-header">
+        <img src="{{ post.user.profile.profileimg.url }}">
 
-            <div class="post-content">
-                ❤️ 💬 🔖
-                <p><b>alex_dev</b> New Django project 🚀</p>
-            </div>
+        <div>
+            <strong>{{ post.user.username }}</strong>
         </div>
 
+    </div>
+
+    <img class="post-image"
+         src="{{ post.image_upload.url }}">
+
+    <div class="post-content">
+        {{ post.caption }}
+    </div>
+
+</div>
+
+{% endfor %}
+       
     </main>
 
     <!-- RIGHT -->

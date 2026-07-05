@@ -21,7 +21,18 @@ def home(request):
     
     user_object=User.objects.get(username=request.user.username)
     
+    user_all_posts=Post.objects.all()
+    
     profile_object=Profile.objects.get(user=user_object) 
+    
+    context={
+        "user_object": user_object, 
+        "user_all_posts": user_all_posts,
+        "profile_object": profile_object,   
+        
+        
+        }
+    
     return render (request,'home.html')
 
 
