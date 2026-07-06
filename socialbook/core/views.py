@@ -21,18 +21,18 @@ def home(request):
     
     user_object=User.objects.get(username=request.user.username)
     
-    user_all_posts=Post.objects.all()
+    all_posts=Post.objects.all()
     
     profile_object=Profile.objects.get(user=user_object) 
     
     context={
         "user_object": user_object, 
-        "user_all_posts": user_all_posts,
+        "user_all_posts": all_posts,
         "profile_object": profile_object,   
         
-        
+       
         }
-    
+    print(all_posts)
     return render (request,'home.html')
 
 
@@ -70,7 +70,7 @@ def profile(request):
         
     }
     
-    print(user_posts)
+    # print(user_posts)
     
     return render(request,'profile.html',context)
     
