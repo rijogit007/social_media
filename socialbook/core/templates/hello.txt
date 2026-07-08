@@ -1,0 +1,77 @@
+
+Conversation with Gemini
+[08/Jul/2026 12:07:16] "GET /home HTTP/1.1" 200 7107
+
+Not Found: /post_images/20240320_223226.pngx
+
+[08/Jul/2026 12:07:16] "GET /post_images/20240320_223226.pngx HTTP/1.1" 404 3880
+
+It looks like you've got a classic typo in an image file extension causing a 404 Not Found error on your server.
+
+What's Happening:
+The Success: A user successfully loaded your homepage (/home) with a 200 OK status.
+
+The Error: The homepage tried to fetch an image asset, but it requested /post_images/20240320_223226.pngx.
+
+The Culprit: The extension ends in .pngx instead of .png. Since that file doesn't exist, your server threw a 404 error.
+
+How to Fix It:
+You'll need to track down where that image is being called in your code and fix the extension.
+
+Check your HTML/Templates: Search your codebase (specifically your homepage template) for 20240320_223226.pngx and change it to .png.
+
+HTML
+<img src="/post_images/20240320_223226.pngx" />
+
+<img src="/post_images/20240320_223226.png" />
+Check your Database: If your homepage dynamically loads blog posts or user-uploaded images from a database, a row in your database likely has a typo in the file path column.
+
+Did a stray keystroke catch you off guard, or is your application dynamically appending that extra "x" somewhere in the backend?
+
+dada sahib falke....who
+
+Dadasaheb Phalke (born Dhundiraj Govind Phalke) is universally revered as the "Father of Indian Cinema."
+
+He was a visionary director, producer, and screenwriter who single-handedly birthed the Indian film industry at the beginning of the 20th century.
+
+Here is a quick breakdown of why he is such a legendary figure:
+
+1. The Pioneer of Indian Cinema
+In 1913, Phalke made Raja Harishchandra, which was India's very first full-length feature film.
+
+It was a silent film based on Hindu mythology.
+
+Because acting wasn't considered a respectable profession for women at the time, Phalke actually had to cast a delicate-featured man (Anna Salunke) to play the leading female role.
+
+2. A One-Man Army
+Making movies back then was purely experimental. Phalke didn't just direct; he was the producer, writer, cinematographer, editor, and makeup artist. Over his 19-year career, he went on to make 95 feature-length films and 26 short films, establishing the groundwork for what would eventually become Bollywood and the broader Indian film ecosystem.
+
+3. The Highest Honor in Indian Cinema
+To honor his massive legacy, the Government of India introduced the Dadasaheb Phalke Award in 1969.
+
+It is the highest, most prestigious award in Indian cinema, presented annually at the National Film Awards for "outstanding contribution to the growth and development of Indian cinema."
+
+Are you researching him for a project, or did his name just happen to pop up somewhere?
+
+in malyalm
+
+ദാദാസാഹേബ് ഫാൽക്കെ (Dadasaheb Phalke) "ഇന്ത്യൻ സിനിമയുടെ പിതാവ്" എന്നാണ് അറിയപ്പെടുന്നത്. ഇന്ത്യൻ ചലച്ചിത്ര വ്യവസായത്തിന് അടിത്തറയിട്ട മഹാനായ ഒരു സംവിധായകനും നിർമ്മാതാവുമായിരുന്നു അദ്ദേഹം.
+
+അദ്ദേഹത്തെക്കുറിച്ചുള്ള പ്രധാന വിവരങ്ങൾ താഴെ നൽകുന്നു:
+
+1. ഇന്ത്യൻ സിനിമയുടെ തുടക്കം
+1913-ൽ പുറത്തിറങ്ങിയ രാജാ ഹരിശ്ചന്ദ്ര (Raja Harishchandra) എന്ന ചിത്രമാണ് ഇന്ത്യയിലെ ആദ്യത്തെ സമ്പൂർണ്ണ ഫീച്ചർ ഫിലിം. ഈ നിശ്ശബ്ദ ചിത്രം (Silent Movie) നിർമ്മിച്ചതും സംവിധാനം ചെയ്തതും ദാദാസാഹേബ് ഫാൽക്കെയായിരുന്നു. അക്കാലത്ത് സ്ത്രീകൾ സിനിമയിൽ അഭിനയിക്കാൻ തയ്യാറാകാതിരുന്നതിനാൽ, ഒരു പുരുഷനാണ് ഇതിലെ സ്ത്രീ കഥാപാത്രത്തെ അവതരിപ്പിച്ചത്.
+
+2. സിനിമയിലെ സകലകലാ വല്ലഭൻ
+ചിത്രീകരണത്തിനുള്ള ക്യാമറ ഇറക്കുമതി ചെയ്യുന്നത് മുതൽ കഥയെഴുത്ത്, സംവിധാനം, എഡിറ്റിംഗ്, നിർമ്മാണം എന്നിവയെല്ലാം അദ്ദേഹം സ്വയം പഠിച്ചെടുത്താണ് ചെയ്തത്. തന്റെ 19 വർഷത്തെ സിനിമാ ജീവിതത്തിൽ 95-ലധികം പൂർണ്ണദൈർഘ്യ ചിത്രങ്ങളും 26 ഹ്രസ്വചിത്രങ്ങളും അദ്ദേഹം നിർമ്മിച്ചു.
+
+3. ദാദാസാഹേബ് ഫാൽക്കെ അവാർഡ്
+ഇന്ത്യൻ സിനിമയ്ക്ക് നൽകിയ സമഗ്ര സംഭാവനകളെ മാനിച്ചുകൊണ്ട് ഭാരത സർക്കാർ 1969 മുതൽ അദ്ദേഹത്തിന്റെ പേരിൽ അവാർഡ് ഏർപ്പെടുത്തി. ഇന്ത്യൻ സിനിമയിലെ ഏറ്റവും ഉയർന്ന പുരസ്കാരമാണിത്.
+
+ഇതിനെക്കുറിച്ച് കൂടുതൽ എന്തെങ്കിലും അറിയണമെന്നുണ്ടോ?
+
+
+
+
+
+

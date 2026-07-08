@@ -246,16 +246,16 @@
 <div class="post">
 
     <div class="post-header">
-        <img src="{{ post.user.profile.profileimg.url }}">
+        <img src="{{profile.profileimg.url}}">
 
-        <div>
-            <strong>{{ post.user.username }}</strong>
-        </div>
+       <div>
+            <strong>{{ post.user }}</strong>
+        </div> 
 
     </div>
 
     <img class="post-image"
-         src="{{ post.image_upload.url }}">
+         src="{{post.image.url}}">
 
     <div class="post-content">
         {{ post.caption }}

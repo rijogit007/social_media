@@ -23,17 +23,18 @@ def home(request):
     
     all_posts=Post.objects.all()
     
-    profile_object=Profile.objects.get(user=user_object) 
+    profile_object=Profile.objects.all() 
     
     context={
         "user_object": user_object, 
-        "user_all_posts": all_posts,
+        "all_posts": all_posts,
         "profile_object": profile_object,   
         
        
         }
     print(all_posts)
-    return render (request,'home.html')
+    print("hello")
+    return render (request,'home.html',context)
 
 
 @login_required(login_url='signin')
@@ -58,8 +59,10 @@ def upload(request):
 def profile(request):
     
     profile_object=Profile.objects.get(user=request.user)
-    user_posts=Post.objects.filter(user=request.user)
+    user_posts=Post.objects.filter(user=request.user.username)
     
+    for post in Post.objects.all():
+        print(post.image.name)
     
 
     context={
