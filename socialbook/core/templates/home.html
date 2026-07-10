@@ -244,14 +244,14 @@
        {% for post in all_posts %}
 
 <div class="post">
-
+      {% for profile in profile_object %}
     <div class="post-header">
         <img src="{{profile.profileimg.url}}">
-
+       
        <div>
-            <strong>{{ post.user }}</strong>
+            <strong>{{ profile.user }}</strong>
         </div> 
-
+        {% endfor %}
     </div>
 
     <img class="post-image"
@@ -271,7 +271,7 @@
     <aside class="right-sidebar">
 
         <div class="profile-card">
-            <img src="https://i.pravatar.cc/150?img=20">
+            
             <div>
                 <b>rijo_dev</b><br>
                 <small>Web Dev</small>
