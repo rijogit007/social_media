@@ -1,7 +1,7 @@
 from django.shortcuts import render,redirect
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User,auth
-from core.models import Profile,Post
+from core.models import Profile,Post,LikePost
 from django.contrib import messages
 
 from django.http import HttpResponse
@@ -213,3 +213,19 @@ def settings(request):
     return render(request, 'settings.html', {'setting': setting})
 
 
+def like_post(request):
+    
+    username=request.user.username
+    
+    post_id=request.Get.get('post_id')
+    
+    post=Post.objects.get(id=post_id)
+    
+    
+    like_filter=LikePost.objects.get(post_id=post_id,username=username).first()
+    
+    
+    if like_filter==None:
+        new_like=LikePost.objects.create(post_id=post_id,username=username)
+        
+        
