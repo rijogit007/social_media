@@ -261,15 +261,22 @@
 
    
     <div class="post-actions">
-        <form action="/like-post" method="POST" style="display: inline;">
-            {% csrf_token %}
-            <input type="hidden" name="post_id" value="{{ post.id }}">
-            <button type="submit" class="like-btn">
-                ❤️ Like
-            </button>
-        </form>
+    <form action="{% url 'like_post' %}" method="POST" style="display: inline;">
+        {% csrf_token %}
+        <input type="hidden" name="post_id" value="{{ post.id }}">
+        <button type="submit" class="like-btn">
+            ❤️ Like
+        </button>
+    </form>
+
+    {% if post.no_of_likes == 0 %}
+        <span class="like-count">no likes</span>
+    {% elif post.no_of_likes == 1 %}
+        <span class="like-count">1 like</span>
+    {% else %}
         <span class="like-count">{{ post.no_of_likes }} likes</span>
-    </div>
+    {% endif %}
+</div>
 
     <div class="post-content">
         {{ post.caption }}
