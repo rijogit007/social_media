@@ -13,6 +13,7 @@ urlpatterns = [
     path('logout',views.logout,name='logout'),
     path('upload',views.upload,name='upload'),
     path('settings',views.settings,name='settings'),
+    path('allimage',views.settings,name='allimages'),
     
     
 ]

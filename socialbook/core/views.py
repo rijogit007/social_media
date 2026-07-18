@@ -55,6 +55,41 @@ def upload(request):
     return render(request,'home.html')
 
 
+@login_required
+def userallimg(request):
+    
+    username=request.user.username
+    
+    # post_id=request.Get.get('post_id')
+    post_id = request.POST.get('post_id')
+    
+    post=Post.objects.get(id=post_id)
+    
+    
+    like_filter=LikePost.objects.filter(post_id=post_id,username=username).first()
+    
+    
+    
+    if like_filter==None:
+        new_like=LikePost.objects.create(post_id=post_id,username=username)
+        
+        post.no_of_likes=post.no_of_likes+1
+        post.save()
+        return redirect('allimages')
+        
+    else:
+        
+        like_filter.delete()
+        
+        post.no_of_likes=post.no_of_likes-1
+        post.save()
+        
+        return redirect('allimages')    
+    
+
+    return render (request,'user_all_img.html')
+
+
 @login_required(login_url='signin')
 def profile(request):
     
@@ -76,6 +111,8 @@ def profile(request):
     # print(user_posts)
     
     return render(request,'profile.html',context)
+    
+    
     
 
 # @login_required(login_url='signin')
