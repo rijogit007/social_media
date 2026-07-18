@@ -223,7 +223,7 @@ def like_post(request):
     post=Post.objects.get(id=post_id)
     
     
-    like_filter=LikePost.objects.get(post_id=post_id,username=username).f
+    like_filter=LikePost.objects.filter(post_id=post_id,username=username).first()
     
     
     

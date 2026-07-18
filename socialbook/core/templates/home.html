@@ -260,9 +260,9 @@
          src="{{post.image.url}}">
 
    
-    <div class="post-actions">
+{% comment %} <div class="post-actions">
     <form action="{% url 'like_post' %}" method="POST" style="display: inline;">
-        {% csrf_token %}
+     {% csrf_token %}
         <input type="hidden" name="post_id" value="{{ post.id }}">
         <button type="submit" class="like-btn">
             ❤️ Like
@@ -276,6 +276,28 @@
     {% else %}
         <span class="like-count">{{ post.no_of_likes }} likes</span>
     {% endif %}
+</div> {% endcomment %}
+
+<div class="post-actions">
+    <!-- 1. Added class="like-form" -->
+    <form action="{% url 'like_post' %}" method="POST" class="like-form" style="display: inline;">
+        {% csrf_token %}
+        <input type="hidden" name="post_id" value="{{ post.id }}">
+        <button type="submit" class="like-btn">
+            ❤️ Like
+        </button>
+    </form>
+
+    <!-- 2. Added unique ID to this span -->
+    <span class="like-count" id="like-count-{{ post.id }}">
+        {% if post.no_of_likes == 0 %}
+            no likes
+        {% elif post.no_of_likes == 1 %}
+            1 like
+        {% else %}
+            {{ post.no_of_likes }} likes
+        {% endif %}
+    </span>
 </div>
 
     <div class="post-content">
@@ -345,7 +367,36 @@
             }
         });
 
+    });document.querySelectorAll('.like-form').forEach(form => {
+    form.addEventListener('submit', function(e) {
+        e.preventDefault(); // This is the magic line that blocks the page reload!
+        
+        const formData = new FormData(this);
+        const postId = this.querySelector('input[name="post_id"]').value;
+        const countSpan = document.getElementById(`like-count-${postId}`);
+
+        // Send the like to Django in the background
+        fetch(this.action, {
+            method: 'POST',
+            body: formData
+        })
+        .then(response => response.text()) // Get the fresh HTML from Django's redirect
+        .then(htmlString => {
+            // Parse the new HTML to find the updated like count
+            const parser = new DOMParser();
+            const doc = parser.parseFromString(htmlString, 'text/html');
+            const updatedCountSpan = doc.getElementById(`like-count-${postId}`);
+            
+            // Swap out the old number with the new one smoothly
+            if (updatedCountSpan && countSpan) {
+                countSpan.textContent = updatedCountSpan.textContent.trim();
+            }
+        })
+        .catch(error => console.error('Error handling like:', error));
     });
+});
+
+
     </script>
 
     </body>
