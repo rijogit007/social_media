@@ -1,43 +1,188 @@
-<div class="post-actions">
-    <!-- 1. Added class="like-form" -->
-    <form action="{% url 'like_post' %}" method="POST" class="like-form" style="display: inline;">
-        {% csrf_token %}
-        <input type="hidden" name="post_id" value="{{ post.id }}">
-        <button type="submit" class="like-btn">
-            ❤️ Like
-        </button>
-    </form>
 
-    <!-- 2. Added unique ID to this span -->
-    <span class="like-count" id="like-count-{{ post.id }}">
-        {% if post.no_of_likes == 0 %}
-            no likes
-        {% elif post.no_of_likes == 1 %}
-            1 like
-        {% else %}
-            {{ post.no_of_likes }} likes
-        {% endif %}
-    </span>
-</div>
+<style>
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:Arial, Helvetica, sans-serif;
+}
 
-    <div class="post-content">
-        {{ post.caption }}
+body{
+    background:#fafafa;
+}
+
+.container{
+    max-width:600px;
+    margin:30px auto;
+}
+
+.post-card{
+    background:#fff;
+    border:1px solid #dbdbdb;
+    border-radius:10px;
+    margin-bottom:30px;
+    overflow:hidden;
+}
+
+.post-header{
+    display:flex;
+    align-items:center;
+    padding:12px;
+    border-bottom:1px solid #efefef;
+}
+
+.profile-pic{
+    width:40px;
+    height:40px;
+    border-radius:50%;
+    background:#ddd;
+    margin-right:10px;
+}
+
+.username{
+    font-weight:bold;
+    color:#262626;
+}
+
+.post-image img{
+    width:100%;
+    display:block;
+}
+
+.post-body{
+    padding:15px;
+}
+
+.caption{
+    margin-bottom:10px;
+    color:#262626;
+}
+
+.likes{
+    font-weight:bold;
+    margin-bottom:12px;
+}
+
+.like-btn{
+    background:#0095f6;
+    color:white;
+    border:none;
+    padding:10px 20px;
+    border-radius:8px;
+    cursor:pointer;
+    font-size:15px;
+    transition:.3s;
+}
+
+.like-btn:hover{
+    background:#1877f2;
+}
+</style>
+
+
+<div class="container">
+
+{% for post in user_posts %}
+
+<div class="post-card">
+
+    <div class="post-header">
+        <div class="profile-pic"></div>
+        <div class="username">{{ request.user.username }}</div>
     </div>
+
+    <div class="post-image">
+        <img src="{{ post.image.url }}" alt="Post">
+    </div>
+
+    <div class="post-body">
+
+        <p class="likes">❤️ {{ post.no_of_likes }} Likes</p>
+
+        <p class="caption">
+            <strong>{{ request.user.username }}</strong>
+            {{ post.caption }}
+        </p>
+
+        <form action="{% url 'user_profile_like_post' %}" method="POST">
+            {% csrf_token %}
+            <input type="hidden" name="post_id" value="{{ post.id }}">
+            <button class="like-btn" type="submit">
+                ❤️ Like
+            </button>
+        </form>
+
+    </div>
+
 </div>
 
 {% endfor %}
-       
-    </main>
 
-    <!-- RIGHT -->
-    <aside class="right-sidebar">
+</div>
 
-        <div class="profile-card">
-            
-            <div>
-                <b>rijo_dev</b><br>
-                <small>Web Dev</small>
-            </div>
-        </div>
 
-    </aside>
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+
+    // Upload Modal
+    const openBtn = document.getElementById("openUpload");
+    const modal = document.getElementById("uploadModal");
+    const closeBtn = document.getElementById("closeModal");
+
+    if (openBtn && modal && closeBtn) {
+        openBtn.addEventListener("click", () => {
+            modal.style.display = "flex";
+        });
+
+        closeBtn.addEventListener("click", () => {
+            modal.style.display = "none";
+        });
+
+        window.addEventListener("click", (e) => {
+            if (e.target === modal) {
+                modal.style.display = "none";
+            }
+        });
+    }
+
+    // Like Button AJAX
+    document.querySelectorAll(".like-form").forEach(form => {
+
+        form.addEventListener("submit", function (e) {
+
+            e.preventDefault();
+
+            const formData = new FormData(this);
+            const postId = this.querySelector('input[name="post_id"]').value;
+            const countSpan = document.getElementById(`like-count-${postId}`);
+
+            fetch(this.action, {
+                method: "POST",
+                body: formData,
+                headers: {
+                    "X-Requested-With": "XMLHttpRequest"
+                }
+            })
+            .then(response => response.text())
+            .then(htmlString => {
+
+                const parser = new DOMParser();
+                const doc = parser.parseFromString(htmlString, "text/html");
+
+                const updatedCountSpan = doc.getElementById(`like-count-${postId}`);
+
+                if (updatedCountSpan && countSpan) {
+                    countSpan.textContent = updatedCountSpan.textContent.trim();
+                }
+
+            })
+            .catch(error => {
+                console.error("Error:", error);
+            });
+
+        });
+
+    });
+
+});
+</script>
